@@ -179,3 +179,7 @@ a.nd:hover { transform: scale(1.12); }
 .mp-banner { animation: fadeUp .6s cubic-bezier(.22,1,.36,1) both, mpFloat 5s ease-in-out .6s infinite; }
 @keyframes mpFloat { 0%,100% { translate: 0 0; } 50% { translate: 0 -6px; } }
 .rm .mp-cloud, .rm .mp-birds, .rm .mp-shoot { display: none; }
+
+/* no visible scrollbars anywhere; areas still scroll with wheel, touch and keyboard */
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; width: 0; height: 0; }
