@@ -133,3 +133,49 @@ a.nd:hover { transform: scale(1.12); }
 .blk bdi[dir="auto"], .con .msg { font-family: var(--f-body); font-weight: 700; }
 .con .msg { font-size: 14.5px; }
 .cq[dir="ltr"] .blk-cap, .cq[dir="ltr"] .drop-line { direction: ltr; }
+
+/* ---------- living map ---------- */
+.mp-zoom { transition: transform .55s cubic-bezier(.65,0,.35,1), opacity .5s ease .1s; }
+.mp-twinkle { position: absolute; border-radius: 50%; background: #FFF6D8; box-shadow: 0 0 6px 1px rgba(255,240,190,.8); animation: mpTwinkle 2.6s ease-in-out infinite; }
+@keyframes mpTwinkle { 0%,100% { opacity: .15; transform: scale(.6); } 50% { opacity: 1; transform: scale(1.2); } }
+.mp-shoot { position: absolute; top: 9%; left: 4%; width: 120px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), #fff); opacity: 0; animation: mpShoot 9s ease-in 3s infinite; }
+@keyframes mpShoot { 0%,88% { opacity: 0; transform: translate(0,0) rotate(18deg); } 90% { opacity: 1; } 100% { opacity: 0; transform: translate(380px,130px) rotate(18deg); } }
+.mp-cloud { position: absolute; left: 0; animation: mpCloud 90s linear infinite; will-change: transform; }
+@keyframes mpCloud { from { translate: -320px 0; } to { translate: 105vw 0; } }
+.mp-birds { position: absolute; left: 0; animation: mpBirds 30s linear infinite; }
+@keyframes mpBirds { from { translate: 105vw 0; } 50% { translate: 50vw -30px; } to { translate: -140px 10px; } }
+.mp-wing { transform-box: fill-box; transform-origin: center; animation: mpFlap .5s ease-in-out infinite alternate; }
+@keyframes mpFlap { from { transform: scaleY(1); } to { transform: scaleY(-.5); } }
+.mp-smoke { opacity: 0; transform-box: fill-box; transform-origin: center; animation: mpSmoke 3.3s ease-out infinite; }
+@keyframes mpSmoke { 0% { opacity: 0; transform: translate(0,0) scale(.4); } 20% { opacity: .75; } 100% { opacity: 0; transform: translate(10px,-46px) scale(1.7); } }
+.mp-window { animation: winLit 3.4s ease-in-out infinite; }
+.mp-sway { animation: mpSway 3.6s ease-in-out infinite; }
+@keyframes mpSway { 0%,100% { transform: rotate(-2.2deg); } 50% { transform: rotate(2.2deg); } }
+.mp-bloom { animation: mpBloom 2.8s ease-in-out infinite; }
+@keyframes mpBloom { 0%,100% { transform: scale(.85); } 50% { transform: scale(1.2); } }
+.mp-flow { animation: mpFlow 1.6s linear infinite; }
+@keyframes mpFlow { to { stroke-dashoffset: -36; } }
+.mp-road { animation: mpRoad 1.2s linear infinite; }
+@keyframes mpRoad { to { stroke-dashoffset: -.05; } }
+.mp-spin-slow { animation: spin 22s linear infinite; }
+.mp-spin-slow-r { animation: spin 16s linear infinite reverse; }
+.mp-moon { animation: mpMoon 6s ease-in-out infinite; }
+@keyframes mpMoon { 0%,100% { opacity: .9; } 50% { opacity: .65; } }
+.mp-ghost { animation: mpGhost 2.4s ease-in-out infinite; }
+@keyframes mpGhost { 0%,100% { opacity: .35; } 50% { opacity: .75; } }
+.mp-pop { animation: mpPop .6s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes mpPop { from { opacity: 0; transform: translateY(24px) scale(.3); } }
+.mp-node-done .nd:hover, .mp-node-cur .nd:hover { animation: mpWiggle .5s ease; }
+@keyframes mpWiggle { 0%,100% { transform: scale(1.12) rotate(0); } 30% { transform: scale(1.16) rotate(-8deg); } 60% { transform: scale(1.14) rotate(6deg); } }
+.mp-node-lock .nd.lock:hover svg { animation: shake .45s ease; }
+.mp-stars .star.on { animation: mpStar 3s ease-in-out infinite; }
+@keyframes mpStar { 0%,80%,100% { transform: scale(1) rotate(0); } 88% { transform: scale(1.35) rotate(18deg); } }
+/* thumbnails of the player's work peek out on hover/focus instead of piling up */
+.mp-thumb { opacity: 0; transform: translateY(12px) rotate(-3deg) scale(.85); transition: opacity .25s ease, transform .35s cubic-bezier(.34,1.56,.64,1); animation: none; pointer-events: none; z-index: 5; }
+.map-node:hover .mp-thumb, .map-node:focus-within .mp-thumb { opacity: 1; transform: translateY(0) rotate(-3deg) scale(1); }
+.map-node:hover { z-index: 6 !important; }
+.mp-bit-wait { animation: mpHop 2.2s ease-in-out infinite; }
+@keyframes mpHop { 0%,70%,100% { translate: 0 0; } 78% { translate: 0 -14px; } 86% { translate: 0 0; } 92% { translate: 0 -6px; } }
+.mp-banner { animation: fadeUp .6s cubic-bezier(.22,1,.36,1) both, mpFloat 5s ease-in-out .6s infinite; }
+@keyframes mpFloat { 0%,100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+.rm .mp-cloud, .rm .mp-birds, .rm .mp-shoot { display: none; }
