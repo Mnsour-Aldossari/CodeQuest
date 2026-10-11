@@ -37,7 +37,8 @@ function cspPlugin(): Plugin {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), cspPlugin()],
-  build: { target: 'es2022', sourcemap: false },
+  // the level screen chunk is mostly CodeMirror; it loads lazily after Home/Map
+  build: { target: 'es2022', sourcemap: false, chunkSizeWarningLimit: 1000 },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],

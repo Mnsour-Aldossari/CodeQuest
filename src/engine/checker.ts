@@ -49,7 +49,7 @@ const L = (ar: string, en: string): Loc => ({ ar, en });
 const norm = (s: string) => s.replace(/\s+/g, ' ').trim();
 
 function countOk(n: number, c: number | { min?: number; max?: number } | undefined, dflt = { min: 1 }) {
-  const spec = c ?? dflt;
+  const spec: number | { min?: number; max?: number } = c ?? dflt;
   if (typeof spec === 'number') return n === spec;
   return (spec.min === undefined || n >= spec.min) && (spec.max === undefined || n <= spec.max);
 }

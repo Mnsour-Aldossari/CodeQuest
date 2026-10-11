@@ -113,7 +113,7 @@ async function run(p: Payload) {
   await tick();
   safePush({ t: 'dom', snap: snapshot(p.probes) });
   for (const ev of p.probes.events) {
-    let el: Element | null = null;
+    let el: Element | null;
     try {
       el = document.querySelector(ev.selector);
     } catch {

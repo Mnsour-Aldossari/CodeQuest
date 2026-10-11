@@ -6,6 +6,10 @@ import { explainError, traceProblem } from './errors';
 import { frameState, frames } from './trace';
 import { robotSim, robotStateAt } from './robotSim';
 import type { Block, Check, Trace } from './types';
+import { applyOneStep, glowTarget } from './hints';
+import { LEVELS } from '../levels';
+import { countBlocks as count } from './tree';
+
 
 let k = 0;
 const B = (type: string, fields: Block['fields'] = {}, slots: Block['slots'] = {}): Block => ({ id: `t${++k}`, type, fields, slots });
@@ -59,7 +63,7 @@ describe('checker', () => {
   const snap = {
     title: 't',
     els: [
-      { tag: 'body', parent: -1, text: 'hi', attrs: {}, style: { color: 'rgb(0, 0, 0)' } },
+      { tag: 'body', parent: -1, text: 'hi', attrs: {} as Record<string, string>, style: { color: 'rgb(0, 0, 0)' } },
       { tag: 'h1', parent: 0, text: 'hi', attrs: { class: 'x' }, style: { color: 'rgb(0, 128, 0)' } },
     ],
     q: { h1: [1], p: [] },
@@ -118,5 +122,23 @@ describe('stars, xp, errors, timeline, robot', () => {
     expect(r.state()).toMatchObject({ x: 2, y: 1, gems: 1 });
     expect(r.isAtGoal()).toBe(true);
     expect(robotStateAt({ rows: ['S.*', '#.G'], dir: 'E' }, ev)).toMatchObject({ x: 2, y: 1, gems: 1, bumps: 1 });
+  });
+});
+
+
+describe('hints', () => {
+  it.each(LEVELS.filter((l) => l.mode !== 'code').map((l) => [l.id, l] as const))('%s: repeated hint 3 reaches the solution', (_id, level) => {
+    let tree = level.initial!;
+    for (let i = 0; i < 30; i++) {
+      const r = applyOneStep(level.solution!, tree);
+      if (!r) break;
+      tree = r.tree;
+    }
+    expect(applyOneStep(level.solution!, tree)).toBeNull();
+    expect(count(tree)).toBe(count(level.solution!));
+  });
+  it('glows the palette block that comes next', () => {
+    const l = LEVELS[0];
+    expect(glowTarget(l.solution!, l.initial!, l.palette)).toEqual({ paletteIndex: 0 });
   });
 });

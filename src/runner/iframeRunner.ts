@@ -22,7 +22,7 @@ export interface PageRunOpts {
 export class PageRunner {
   private iframe: HTMLIFrameElement | null = null;
   private cancel: (() => void) | null = null;
-  private host: HTMLElement;
+  readonly host: HTMLElement;
   constructor(host: HTMLElement) {
     this.host = host;
   }
