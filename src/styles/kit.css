@@ -1,0 +1,320 @@
+/* ==========================================================
+   Code Quest · مغامرة الكود — design kit (tokens + components + motion)
+   Ported verbatim from the approved Claude Design canvas; app additions live in app.css.
+   ========================================================== */
+:root{
+  /* base */
+  --ink:#1F1A2E; --ink-2:#4A4360; --ink-3:#625B78;
+  --paper:#FFF9F0; --card:#FFFFFF; --line:#EADFCC; --line-2:#D8C9B0;
+  /* HTML Village */
+  --sand:#F6E6CA; --sand-2:#EDD3A8; --terra:#C24E2B; --terra-d:#8E3219; --sun:#F2A93B; --clay-l:#FBE3D6;
+  /* CSS Forest */
+  --leaf:#1A7F53; --leaf-d:#0F5A3A; --leaf-l:#DDF2E3; --bloom:#D6457F; --firefly:#E6F05A; --mist:#EEF6EC;
+  /* JS Castle */
+  --night:#17123A; --night-2:#221B52; --indigo:#2B2370; --violet:#6A3FD6; --amber:#FFB547; --cyan:#3FE0E8; --moon:#F3EEFF; --moon-2:#B9B0E6;
+  /* block categories */
+  --c-html:#C24E2B; --c-css:#1A7F53; --c-js:#6A3FD6; --c-bot:#0A7AA0; --c-val:#FFE6A3; --c-val-ink:#4A3500;
+  /* status */
+  --ok:#157A44; --ok-l:#DCF3E4; --err:#D23B3B; --err-d:#A82424; --err-l:#FDE6E4; --warn:#F2A93B; --warn-l:#FFF1D6; --focus:#2E6BFF;
+  /* type */
+  --f-display:'Baloo Bhaijaan 2','Tajawal',system-ui,sans-serif;
+  --f-body:'Tajawal','Baloo Bhaijaan 2',system-ui,sans-serif;
+  --f-code:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  /* radii / shadow */
+  --r-xs:6px; --r-s:10px; --r-m:14px; --r-l:20px; --r-xl:28px;
+  --sh-1:0 1px 0 rgba(31,26,46,.05),0 2px 6px rgba(31,26,46,.08);
+  --sh-2:0 2px 0 rgba(31,26,46,.05),0 12px 28px rgba(31,26,46,.12);
+  --sh-lift:0 24px 38px rgba(31,26,46,.30),0 8px 12px rgba(31,26,46,.16);
+  --sh-block:0 3px 0 rgba(0,0,0,.28);
+  /* motion */
+  --e-spring:cubic-bezier(.34,1.56,.64,1);
+  --e-bounce:cubic-bezier(.68,-0.6,.32,1.6);
+  --e-out:cubic-bezier(.22,1,.36,1);
+  --e-inout:cubic-bezier(.65,0,.35,1);
+  --d-xs:120ms; --d-s:200ms; --d-m:320ms; --d-l:560ms; --d-xl:900ms;
+}
+*{box-sizing:border-box}
+.cq{font-family:var(--f-body);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+.cq h1,.cq h2,.cq h3,.cq h4{font-family:var(--f-display);margin:0;line-height:1.15}
+.cq p{margin:0}
+.cq button{font:inherit;color:inherit}
+.cq a{color:inherit;text-decoration:none}
+.cq :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:12px}
+.code,.cq code{font-family:var(--f-code);direction:ltr;unicode-bidi:isolate}
+.iso{unicode-bidi:isolate}
+.ltr{direction:ltr;unicode-bidi:isolate}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border:0;border-radius:16px;font-family:var(--f-display)!important;font-weight:700;font-size:18px;cursor:pointer;position:relative;white-space:nowrap;
+  transition:transform var(--d-s) var(--e-spring),box-shadow var(--d-s) var(--e-out),background var(--d-s);user-select:none}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(3px)}
+.btn svg{flex:none}
+.btn-primary{background:var(--terra);color:#fff;box-shadow:0 5px 0 var(--terra-d),0 10px 20px rgba(194,78,43,.25)}
+.btn-primary:active{box-shadow:0 1px 0 var(--terra-d)}
+.btn-run{background:var(--ok);color:#fff;box-shadow:0 5px 0 #0C5530,0 10px 22px rgba(21,122,68,.3)}
+.btn-run:active{box-shadow:0 1px 0 #0C5530}
+.btn-violet{background:var(--violet);color:#fff;box-shadow:0 5px 0 #43249A,0 10px 22px rgba(106,63,214,.35)}
+.btn-secondary{background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line-2),0 0 0 2px var(--line-2) inset}
+.btn-secondary:active{box-shadow:0 1px 0 var(--line-2),0 0 0 2px var(--line-2) inset}
+.btn-ghost{background:transparent;color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(31,26,46,.06)}
+.btn-dark{background:rgba(255,255,255,.08);color:var(--moon);box-shadow:0 0 0 2px rgba(255,255,255,.16) inset}
+.btn-icon{width:48px;padding:0;min-width:48px}
+.btn-lg{min-height:64px;font-size:22px;padding:0 34px;border-radius:20px}
+.btn-sm{min-height:44px;font-size:16px;padding:0 16px;border-radius:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn-hint{background:var(--warn-l);color:#6B4300;box-shadow:0 4px 0 #E2C07E,0 0 0 2px #E9C98A inset}
+.hint-pulse{animation:hintPulse 1.4s var(--e-out) infinite}
+.hint-pulse::after{content:"";position:absolute;inset:-4px;border-radius:20px;border:3px solid var(--warn);animation:hintRing 1.4s var(--e-out) infinite;pointer-events:none}
+@keyframes hintPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes hintRing{0%{opacity:.9;transform:scale(.95)}100%{opacity:0;transform:scale(1.35)}}
+
+/* ---------- chips / toggles / tabs ---------- */
+.chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:999px;font-weight:700;font-size:14px;background:#fff;box-shadow:0 0 0 1.5px var(--line) inset;white-space:nowrap}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:rgba(31,26,46,.07);gap:2px}
+.seg button{min-height:40px;min-width:44px;padding:0 14px;border:0;border-radius:999px;background:transparent;font-weight:800;cursor:pointer;transition:background var(--d-s),color var(--d-s),transform var(--d-s) var(--e-spring)}
+.seg button[aria-pressed="true"]{background:#fff;box-shadow:var(--sh-1)}
+.switch{position:relative;width:56px;height:32px;border-radius:999px;border:0;background:#CFC4B2;cursor:pointer;transition:background var(--d-m);padding:0;flex:none}
+.switch::after{content:"";position:absolute;top:4px;inset-inline-start:4px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:inset-inline-start var(--d-m) var(--e-spring),transform var(--d-m) var(--e-spring)}
+.switch[aria-checked="true"]{background:var(--ok)}
+.switch[aria-checked="true"]::after{inset-inline-start:28px}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:16px;background:rgba(31,26,46,.06)}
+.tab{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 12px;border:0;border-radius:12px;background:transparent;font-weight:700;font-size:15px;color:var(--ink-2);cursor:pointer;transition:background var(--d-s),color var(--d-s)}
+.tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:var(--sh-1)}
+.tabs-dark{background:rgba(255,255,255,.06)}
+.tabs-dark .tab{color:var(--moon-2)}
+.tabs-dark .tab[aria-selected="true"]{background:rgba(255,255,255,.14);color:#fff;box-shadow:none}
+
+/* ---------- cards / panels ---------- */
+.panel{background:#fff;border-radius:var(--r-l);box-shadow:var(--sh-2)}
+.panel-dark{background:rgba(255,255,255,.05);border-radius:var(--r-l);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset}
+.panel-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 10px}
+.panel-t{font-family:var(--f-display);font-weight:800;font-size:18px}
+.dots-bg{background-color:#FBF6EE;background-image:radial-gradient(rgba(31,26,46,.13) 1.2px,transparent 1.4px);background-size:22px 22px}
+.dots-dark{background-color:#120E2E;background-image:radial-gradient(rgba(185,176,230,.16) 1.2px,transparent 1.4px);background-size:22px 22px}
+
+/* ---------- bubble ---------- */
+.bubble{position:relative;background:#fff;border-radius:20px;padding:12px 18px;box-shadow:var(--sh-2);animation:bubbleIn var(--d-l) var(--e-spring) both}
+.bubble::before{content:"";position:absolute;top:22px;inset-inline-start:-9px;width:18px;height:18px;background:#fff;transform:rotate(45deg);border-radius:4px}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(8px) scale(.94)}}
+.line-in{animation:lineIn .5s var(--e-out) both}
+@keyframes lineIn{from{opacity:0;transform:translateY(6px)}}
+
+/* ---------- goals ---------- */
+.goal{display:flex;align-items:center;gap:10px;min-height:36px;padding:4px 12px 4px 6px;border-radius:12px;font-weight:700;font-size:15px;transition:background var(--d-m)}
+.goal .gi{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;transition:background var(--d-m),transform var(--d-m) var(--e-spring)}
+.goal.off .gi{background:var(--err-l);color:var(--err-d)}
+.goal.on{background:var(--ok-l)}
+.goal.on .gi{background:var(--ok);color:#fff;animation:goalPop .55s var(--e-spring) both}
+.goal.on .gl{animation:lineIn .4s var(--e-out) both}
+@keyframes goalPop{0%{transform:scale(.4) rotate(-90deg)}60%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1)}}
+
+/* ---------- XP + stars ---------- */
+.xp{position:relative;height:14px;border-radius:999px;background:#EFE4D2;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
+.xp>i{position:absolute;inset-block:0;inset-inline-start:0;border-radius:999px;background:linear-gradient(90deg,#F2A93B,#E7743F);animation:xpFill 1.6s var(--e-out) .3s both;overflow:hidden}
+.xp>i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);animation:shimmer 2.4s linear infinite}
+@keyframes xpFill{from{width:0}}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.star{width:28px;height:28px;flex:none}
+.star path{fill:#E7DCC9;stroke:#C9B99E;stroke-width:1.5;stroke-linejoin:round}
+.star.on path{fill:#FFC53D;stroke:#C98A0C}
+.star-fly{animation:starFly .8s var(--e-spring) both}
+@keyframes starFly{0%{opacity:0;transform:translate(0,140px) scale(.2) rotate(-200deg)}60%{opacity:1;transform:translate(0,-10px) scale(1.35) rotate(15deg)}100%{transform:none}}
+
+/* ---------- code blocks ---------- */
+.blk-wrap{display:inline-flex;flex-direction:column;align-items:flex-start;gap:3px}
+.blk-cap{font-size:13px;font-weight:700;color:var(--ink-3);padding-inline:6px;direction:rtl}
+.blk{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:6px 12px;border-radius:12px;border:0;font-family:var(--f-code);font-weight:600;font-size:15px;color:#fff;cursor:grab;direction:ltr;unicode-bidi:isolate;white-space:nowrap;text-align:left;
+  box-shadow:var(--sh-block),inset 0 1px 0 rgba(255,255,255,.25);transition:transform var(--d-s) var(--e-spring),box-shadow var(--d-s) var(--e-out),opacity var(--d-s),filter var(--d-s)}
+.blk:hover{transform:translateY(-2px);box-shadow:0 5px 0 rgba(0,0,0,.25),0 8px 16px rgba(31,26,46,.18),inset 0 1px 0 rgba(255,255,255,.25)}
+.blk-html{background:var(--c-html)}
+.blk-css{background:var(--c-css)}
+.blk-js{background:var(--c-js)}
+.blk-bot{background:var(--c-bot)}
+.blk-val{background:var(--c-val);color:var(--c-val-ink);box-shadow:0 3px 0 #D9B95E,inset 0 1px 0 rgba(255,255,255,.6)}
+.blk .kw{opacity:.92}
+.blk .fx{opacity:.85;font-weight:500}
+/* slots */
+.slot{display:inline-flex;align-items:center;justify-content:center;min-width:58px;height:32px;padding:0 6px;border-radius:9px;border:2px dashed rgba(255,255,255,.75);background:rgba(0,0,0,.16);color:rgba(255,255,255,.85);font-size:12px;cursor:pointer;transition:all var(--d-s) var(--e-out)}
+.slot-filled{border:0;background:transparent;padding:0;min-width:0;height:auto}
+.slot-in{height:30px;min-width:52px;width:auto;padding:0 8px;border-radius:8px;border:0;background:#fff;color:var(--ink);font-family:var(--f-code);font-size:14px;font-weight:600;box-shadow:inset 0 2px 0 rgba(0,0,0,.12)}
+.slot-in:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.blk-val .q{opacity:.6}
+/* containers */
+.blk-c{display:inline-flex;flex-direction:column;align-items:stretch;border-radius:14px;min-width:260px;box-shadow:var(--sh-block);transition:transform var(--d-s) var(--e-spring),box-shadow var(--d-s)}
+.blk-c>.ch{display:flex;align-items:center;gap:6px;min-height:44px;padding:6px 12px;color:#fff;font-family:var(--f-code);font-weight:600;font-size:15px;direction:ltr;white-space:nowrap}
+.blk-c>.cb{margin-inline-start:18px;padding:8px 8px 8px 10px;display:flex;flex-direction:column;gap:8px;border-radius:0 10px 10px 0;min-height:52px;direction:ltr}
+.blk-c>.cf{min-height:30px;padding:4px 12px;color:#fff;font-family:var(--f-code);font-weight:600;font-size:15px;border-radius:0 0 14px 14px;direction:ltr}
+.blk-c.blk-html>.cb{background:#FBEAE3}
+.blk-c.blk-css>.cb{background:#E2F3EA}
+.blk-c.blk-js>.cb{background:#EDE6FC}
+.blk-c.dark>.cb{background:rgba(255,255,255,.06)}
+.blk-c{direction:ltr}
+/* line drop target in workspace */
+.drop-line{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:220px;padding:0 14px;border-radius:12px;border:2px dashed #CDBEA6;color:var(--ink-3);font-family:var(--f-body);font-weight:700;font-size:14px;background:rgba(255,255,255,.55);cursor:pointer;transition:all var(--d-s) var(--e-out);direction:rtl}
+.drop-line.dark{border-color:rgba(185,176,230,.4);background:rgba(255,255,255,.04);color:var(--moon-2)}
+/* states */
+.is-picked{transform:translateY(-6px) rotate(-2deg) scale(1.05)!important;box-shadow:var(--sh-lift),0 0 0 3px #fff,0 0 0 6px var(--focus)!important;z-index:5}
+.is-selected{animation:selBob 1.2s var(--e-inout) infinite;box-shadow:var(--sh-lift),0 0 0 3px #fff,0 0 0 6px var(--focus)!important;z-index:5}
+@keyframes selBob{0%,100%{transform:translateY(-4px) rotate(-1.5deg) scale(1.05)}50%{transform:translateY(-8px) rotate(1deg) scale(1.05)}}
+.is-dragging{opacity:.35;filter:grayscale(.4)}
+.is-target{animation:targetBreathe 1.1s var(--e-inout) infinite;border-color:#FFD25A!important;border-style:solid!important;background:rgba(255,210,90,.28)!important;color:#5A3D00!important}
+@keyframes targetBreathe{0%,100%{box-shadow:0 0 0 3px rgba(255,197,61,.9),0 0 12px 2px rgba(255,180,40,.45);transform:scale(1)}50%{box-shadow:0 0 0 5px rgba(255,197,61,.6),0 0 26px 8px rgba(255,180,40,.55);transform:scale(1.04)}}
+.is-dim{opacity:.35;filter:saturate(.3)}
+.is-snap{animation:snap .55s var(--e-spring) both}
+@keyframes snap{0%{transform:scale(.7) translateY(-14px);opacity:.4}55%{transform:scale(1.1) translateY(2px);opacity:1}75%{transform:scale(.97)}100%{transform:none}}
+.is-locked{cursor:not-allowed;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.10) 0 6px,transparent 6px 12px)}
+.lock-badge{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:7px;background:rgba(0,0,0,.25)}
+.is-error{background:var(--err)!important;box-shadow:0 3px 0 var(--err-d),0 0 0 3px #fff,0 0 0 6px rgba(210,59,59,.45),0 0 24px rgba(210,59,59,.55)!important;animation:shake .5s var(--e-out) both,errGlow 1.6s ease-in-out .5s infinite}
+@keyframes errGlow{50%{box-shadow:0 3px 0 var(--err-d),0 0 0 3px #fff,0 0 0 9px rgba(210,59,59,.25),0 0 30px rgba(210,59,59,.6)}}
+.is-exec{box-shadow:0 0 0 3px #fff,0 0 0 6px #FFC53D,0 0 26px rgba(255,197,61,.8)!important;animation:execPulse .9s var(--e-inout) infinite}
+@keyframes execPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+.shake{animation:shake .45s var(--e-out) both}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.fly-out{animation:flyOut .42s var(--e-inout) forwards;pointer-events:none}
+@keyframes flyOut{0%{transform:none;opacity:1}30%{transform:translate(20px,-18px) rotate(6deg) scale(1.05)}100%{transform:translate(-420px,-60px) rotate(-14deg) scale(.5);opacity:0}}
+.fly-home{animation:flyHome .5s var(--e-spring) both}
+@keyframes flyHome{from{transform:translateX(60px) scale(.7);opacity:0}}
+.rm-x{display:inline-grid;place-items:center;width:26px;height:26px;margin-inline-start:4px;border-radius:8px;border:0;background:rgba(0,0,0,.2);color:#fff;cursor:pointer;padding:0}
+.rm-x:hover{background:rgba(0,0,0,.35)}
+/* sparks on snap */
+.sparks{position:absolute;left:50%;top:50%;width:0;height:0;pointer-events:none;z-index:6}
+.sparks i{position:absolute;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:#FFD25A;animation:spark .6s var(--e-out) both}
+.sparks i:nth-child(2n){background:#fff;width:5px;height:5px}
+.sparks i:nth-child(1){--a:0deg}.sparks i:nth-child(2){--a:45deg}.sparks i:nth-child(3){--a:90deg}.sparks i:nth-child(4){--a:135deg}
+.sparks i:nth-child(5){--a:180deg}.sparks i:nth-child(6){--a:225deg}.sparks i:nth-child(7){--a:270deg}.sparks i:nth-child(8){--a:315deg}
+@keyframes spark{0%{transform:rotate(var(--a)) translateX(10px) scale(1);opacity:1}100%{transform:rotate(var(--a)) translateX(54px) scale(.2);opacity:0}}
+
+/* ---------- code view tokens ---------- */
+.codeview{font-family:var(--f-code);font-size:14px;line-height:1.75;direction:ltr;text-align:left;white-space:pre;counter-reset:ln}
+.codeview .ln{display:block;padding-inline:12px 16px;border-radius:6px;animation:lineIn .35s var(--e-out) both}
+.codeview .ln::before{counter-increment:ln;content:counter(ln);display:inline-block;width:26px;margin-right:12px;color:#A99E8A;text-align:right}
+.tok-tag{color:#B23A1C}.tok-attr{color:#8A5A00}.tok-str{color:#157A44;unicode-bidi:isolate}.tok-txt{color:var(--ink);unicode-bidi:isolate}.tok-kw{color:#6A3FD6}.tok-fn{color:#0A6E92}.tok-num{color:#B5470E}.tok-com{color:#7B7290;font-style:italic}.tok-p{color:#5C5470}
+.dark-code .tok-tag{color:#FF9C7A}.dark-code .tok-str{color:#7EF0B0}.dark-code .tok-kw{color:#C7A8FF}.dark-code .tok-fn{color:#6FE7F0}.dark-code .tok-num{color:#FFC86B}.dark-code .tok-txt,.dark-code .tok-p{color:#E7E1FF}.dark-code .tok-com{color:#9A90C8}
+.dark-code .ln::before{color:#6F66A3}
+
+/* ---------- console ---------- */
+.con{font-family:var(--f-code);font-size:13.5px;line-height:1.6;direction:ltr;text-align:left}
+.con .cl{display:flex;gap:10px;padding:6px 12px;border-bottom:1px solid rgba(31,26,46,.06);animation:lineIn .3s var(--e-out) both}
+.con .cl.err{background:var(--err-l);color:var(--err-d)}
+.con .cl.ok{color:var(--ok)}
+
+/* ---------- Bit the robot ---------- */
+.bit{overflow:visible;display:block}
+.bit *{transform-box:fill-box;transform-origin:center}
+.bit .b-all{transform-origin:50% 100%}
+.bit .e-happy,.bit .e-sad,.bit .m-smile,.bit .m-sad,.bit .m-o,.bit .x-dots,.bit .x-q,.bit .x-stars,.bit .x-lines,.bit .cheeks{opacity:0}
+.bit .e-normal,.bit .m-flat{opacity:1}
+.bit .b-body{animation:breathe 3.2s var(--e-inout) infinite}
+.bit .b-eyes{animation:blink 4.6s infinite}
+.bit .b-ant{animation:antGlow 2.4s ease-in-out infinite}
+.bit .b-core{animation:antGlow 1.8s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(2.5px)}}
+@keyframes blink{0%,44%,48%,100%{transform:scaleY(1)}46%{transform:scaleY(.1)}}
+@keyframes antGlow{0%,100%{opacity:1}50%{opacity:.55}}
+/* wave (idle on home) */
+.bit--wave .b-arm-r{animation:wave 1.4s var(--e-inout) infinite;transform-origin:30% 15%}
+@keyframes wave{0%,100%{transform:rotate(-150deg)}50%{transform:rotate(-115deg)}}
+.bit--wave .m-smile,.bit--wave .cheeks{opacity:1}.bit--wave .m-flat{opacity:0}
+/* thinking */
+.bit--thinking .x-dots{opacity:1}
+.bit--thinking .x-dots circle{animation:dotUp 1.2s ease-in-out infinite}
+.bit--thinking .x-dots circle:nth-child(2){animation-delay:.2s}.bit--thinking .x-dots circle:nth-child(3){animation-delay:.4s}
+.bit--thinking .b-eyes{animation:lookUp 2.4s var(--e-inout) infinite}
+.bit--thinking .m-o{opacity:1}.bit--thinking .m-flat{opacity:0}
+.bit--thinking .b-ant{animation:antGlow .5s ease-in-out infinite}
+@keyframes dotUp{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-5px);opacity:1}}
+@keyframes lookUp{0%,100%{transform:translate(4px,-4px)}50%{transform:translate(-2px,-5px)}}
+/* running */
+.bit--running .b-all{animation:run .38s ease-in-out infinite}
+.bit--running .x-lines{opacity:1}
+.bit--running .x-lines path{animation:speed .38s linear infinite}
+.bit--running .m-smile{opacity:1}.bit--running .m-flat{opacity:0}
+@keyframes run{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-6px)}}
+@keyframes speed{from{transform:translateX(8px);opacity:0}50%{opacity:1}to{transform:translateX(-10px);opacity:0}}
+/* happy */
+.bit--happy .e-happy,.bit--happy .m-smile,.bit--happy .cheeks{opacity:1}
+.bit--happy .e-normal,.bit--happy .m-flat{opacity:0}
+.bit--happy .b-all{animation:hop .9s var(--e-spring) infinite}
+@keyframes hop{0%,100%{transform:translateY(0) scale(1,1)}20%{transform:translateY(0) scale(1.06,.92)}50%{transform:translateY(-12px) scale(.96,1.05)}80%{transform:translateY(0) scale(1.04,.96)}}
+/* sad / confused */
+.bit--sad .e-sad,.bit--sad .m-sad,.bit--sad .x-q{opacity:1}
+.bit--sad .e-normal,.bit--sad .m-flat{opacity:0}
+.bit--sad .b-head{animation:tilt 2.6s var(--e-inout) infinite}
+.bit--sad .b-ant{fill:#9C93B8;animation:none}
+.bit--sad .x-q{animation:qBob 1.6s ease-in-out infinite}
+@keyframes tilt{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(-3deg) translateY(2px)}}
+@keyframes qBob{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-4px) rotate(8deg)}}
+/* celebrating */
+.bit--celebrate .e-happy,.bit--celebrate .m-o,.bit--celebrate .cheeks,.bit--celebrate .x-stars{opacity:1}
+.bit--celebrate .e-normal,.bit--celebrate .m-flat{opacity:0}
+.bit--celebrate .b-all{animation:jump 1s var(--e-out) infinite}
+.bit--celebrate .b-arm-r{transform:rotate(-160deg);transform-origin:30% 15%;animation:armUp 1s var(--e-out) infinite}
+.bit--celebrate .b-arm-l{transform:rotate(160deg);transform-origin:70% 15%;animation:armUpL 1s var(--e-out) infinite}
+.bit--celebrate .x-stars path{animation:twinkle 1s ease-in-out infinite}
+.bit--celebrate .x-stars path:nth-child(2){animation-delay:.3s}.bit--celebrate .x-stars path:nth-child(3){animation-delay:.6s}
+@keyframes jump{0%,100%{transform:translateY(0) scale(1.05,.95)}40%{transform:translateY(-22px) scale(.95,1.06) rotate(-4deg)}70%{transform:translateY(-8px) rotate(3deg)}}
+@keyframes armUp{0%,100%{transform:rotate(-160deg)}50%{transform:rotate(-190deg)}}
+@keyframes armUpL{0%,100%{transform:rotate(160deg)}50%{transform:rotate(190deg)}}
+@keyframes twinkle{0%,100%{transform:scale(.6) rotate(0);opacity:.4}50%{transform:scale(1.2) rotate(45deg);opacity:1}}
+
+/* ---------- confetti ---------- */
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.confetti i{position:absolute;top:-24px;width:10px;height:16px;border-radius:3px;animation:conf 2.8s cubic-bezier(.25,.6,.4,1) both}
+.confetti i:nth-child(3n){--dx:-80px;border-radius:50%;width:10px;height:10px}
+.confetti i:nth-child(3n+1){--dx:60px}
+.confetti i:nth-child(4n){--dx:-30px;width:8px;height:20px}
+.confetti i:nth-child(5n){--dx:110px}
+@keyframes conf{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--dx,40px),980px) rotate(720deg);opacity:.9}}
+
+/* ---------- ambient particles ---------- */
+.amb{position:absolute;pointer-events:none;border-radius:50%}
+.amb-dust{width:5px;height:5px;background:rgba(242,169,59,.55);animation:dust 9s ease-in-out infinite}
+.amb-fly{width:7px;height:7px;background:#F4FF7A;box-shadow:0 0 10px 3px rgba(230,240,90,.7);animation:firefly 6s ease-in-out infinite}
+.amb-spark{width:4px;height:4px;background:#FFE08A;box-shadow:0 0 8px 2px rgba(63,224,232,.75);animation:sparkUp 5s linear infinite}
+.amb-glyph{font-family:var(--f-code);font-weight:700;color:rgba(255,255,255,.75);border-radius:0;animation:floatGlyph 12s ease-in-out infinite}
+@keyframes dust{0%,100%{transform:translate(0,0);opacity:.2}50%{transform:translate(-30px,-24px);opacity:.9}}
+@keyframes firefly{0%,100%{transform:translate(0,0);opacity:.2}25%{transform:translate(14px,-18px);opacity:1}50%{transform:translate(-10px,-30px);opacity:.4}75%{transform:translate(-18px,-8px);opacity:1}}
+@keyframes sparkUp{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(-120px);opacity:0}}
+@keyframes floatGlyph{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-22px) rotate(6deg)}}
+.drift{animation:drift 40s linear infinite}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-160px)}}
+.bob{animation:bob 3s var(--e-inout) infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.spin{animation:spin 6s linear infinite}
+.spin-r{animation:spin 4s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pop-in{animation:popIn .6s var(--e-spring) both}
+@keyframes popIn{from{opacity:0;transform:scale(.6)}}
+.fade-up{animation:fadeUp .6s var(--e-out) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}}
+.slide-in-x{animation:slideX .7s var(--e-out) both}
+@keyframes slideX{from{opacity:0;transform:translateX(-40px)}}
+.drawer-up{animation:drawerUp .45s var(--e-out) both}
+@keyframes drawerUp{from{transform:translateY(100%)}}
+.draw{stroke-dasharray:1 1;animation:draw 1.6s var(--e-inout) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.pulse-ring{position:absolute;inset:-6px;border-radius:50%;border:3px solid #FFC53D;animation:hintRing 1.6s var(--e-out) infinite;pointer-events:none}
+.pop0{animation:valPopA .5s var(--e-spring) both}
+.pop1{animation:valPopB .5s var(--e-spring) both}
+@keyframes valPopA{0%{transform:scale(1.5) translateY(-10px);color:#FFC53D}100%{transform:none}}
+@keyframes valPopB{0%{transform:scale(1.5) translateY(-10px);color:#FFC53D}100%{transform:none}}
+.toast{animation:toast 2.2s var(--e-out) both}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,20px)}12%,80%{opacity:1;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,10px)}}
+
+/* world restoration */
+.build-in{animation:buildIn .7s var(--e-spring) both}
+@keyframes buildIn{0%{opacity:0;transform:translateY(-40px) scale(.8)}100%{opacity:1;transform:none}}
+.color-in{animation:colorIn 2.2s var(--e-out) both}
+@keyframes colorIn{from{filter:grayscale(1) brightness(.9)}to{filter:grayscale(0)}}
+.glow-on{animation:glowOn 1.2s ease-out both}
+@keyframes glowOn{from{opacity:0}}
+
+/* ---------- reduced motion ---------- */
+.rm *,.rm *::before,.rm *::after{animation:none!important;transition-duration:.15s!important}
+.rm .confetti,.rm .sparks,.rm .amb{display:none!important}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.15s!important}
+  .confetti,.sparks,.amb{display:none!important}
+}

@@ -1,0 +1,11 @@
+# Security headers for static hosts that read _headers (Netlify, Cloudflare Pages).
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src blob:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+/runner/*
+  Content-Security-Policy: default-src 'none'; script-src 'self' blob:; style-src 'unsafe-inline'; img-src data:; font-src data:; form-action 'none'; base-uri 'none'; frame-ancestors 'self'
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff

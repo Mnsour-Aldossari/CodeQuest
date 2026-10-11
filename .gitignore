@@ -1,0 +1,7 @@
+node_modules
+dist
+public/runner/harness.js
+test-results
+playwright-report
+*.tsbuildinfo
+.DS_Store

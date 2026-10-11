@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`serializer > emits instrumented JavaScript with steps, variables and loop guards 1`] = `
+"let score = 0;
+for (let i = 0; i < 3; i++) {
+  score = score + 10;
+}
+console.log(score);"
+`;
+
+exports[`serializer > produces real code and a line map for every block 1`] = `
+"<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <title>بيتي</title>
+  <style>
+    h1 {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>مرحبا يا بِت</h1>
+  <ul>
+    <li>ليلى</li>
+  </ul>
+</body>
+</html>"
+`;
+
+exports[`serializer > produces real code and a line map for every block 2`] = `
+{
+  "root": {
+    "from": 4,
+    "to": 4,
+  },
+  "t2": {
+    "from": 12,
+    "to": 12,
+  },
+  "t4": {
+    "from": 14,
+    "to": 14,
+  },
+  "t5": {
+    "from": 13,
+    "to": 15,
+  },
+  "t6": {
+    "from": 7,
+    "to": 7,
+  },
+  "t7": {
+    "from": 6,
+    "to": 8,
+  },
+}
+`;
