@@ -132,3 +132,4 @@ a.nd:hover { transform: scale(1.12); }
 /* Arabic inside code chips/console messages uses the body font (monospace fallback spaces letters apart) */
 .blk bdi[dir="auto"], .con .msg { font-family: var(--f-body); font-weight: 700; }
 .con .msg { font-size: 14.5px; }
+.cq[dir="ltr"] .blk-cap, .cq[dir="ltr"] .drop-line { direction: ltr; }
