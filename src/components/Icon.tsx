@@ -30,6 +30,8 @@ const P: Record<string, string> = {
   tree: 'M12 3 5 14h14zM12 8 7 17h10zM12 17v4',
   gear: 'M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1',
   download: 'M12 4v12M7 11l5 5 5-5M5 20h14',
+  sparkle: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z',
+  still: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM3 3l18 18',
 };
 
 export type IconName = keyof typeof P;

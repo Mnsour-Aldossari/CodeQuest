@@ -4,6 +4,7 @@ export const S = {
   level: { ar: 'المستوى', en: 'Level' },
   lang: { ar: 'اللغة', en: 'Language' },
   sound: { ar: 'الصوت', en: 'Sound' },
+  motion: { ar: 'الحركة', en: 'Motion' },
   home: { ar: 'الرئيسية', en: 'Home' },
   back: { ar: 'رجوع', en: 'Back' },
   kicker: { ar: 'الفصل الأول · المملكة أظلمت', en: 'Chapter 1 · The kingdom went dark' },

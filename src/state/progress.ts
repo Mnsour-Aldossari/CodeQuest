@@ -13,7 +13,7 @@ export const STORAGE_KEY = 'code-quest:v1';
 export function freshProgress(): Progress {
   const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
   return {
-    version: 1,
+    version: 2,
     xp: 0,
     levels: {},
     badges: [],
@@ -29,7 +29,9 @@ export function loadProgress(raw: unknown): Progress {
 }
 
 function migrate(raw: unknown): unknown {
-  // v1 is the first version. Future versions add steps here: if (raw.version === 1) raw = {...raw, version: 2, ...}.
+  const r = raw as { version?: number; settings?: Record<string, unknown> } | null;
+  // v1 → v2: v1 switched motion off for good whenever the OS asked once; give the choice back to the player.
+  if (r && r.version === 1) return { ...r, version: 2, settings: { ...r.settings, reducedMotion: false } };
   return raw;
 }
 
@@ -90,7 +92,8 @@ export const useProgress = create<Progress & Actions>()(
     }),
     {
       name: STORAGE_KEY,
-      version: 1,
+      version: 2,
+      migrate: (persisted) => loadProgress(persisted) as unknown as Progress & Actions,
       storage: createJSONStorage(() => safeStorage),
       partialize: (s) => ({ version: s.version, xp: s.xp, levels: s.levels, badges: s.badges, settings: s.settings, tourDone: s.tourDone }),
       merge: (persisted, current) => ({ ...current, ...loadProgress(persisted) }),

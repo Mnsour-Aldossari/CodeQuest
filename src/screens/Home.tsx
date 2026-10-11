@@ -6,7 +6,7 @@ import { playerLevel } from '../engine/stars';
 import { useT } from '../i18n';
 import { Bit } from '../components/Bit';
 import { Icon, type IconName } from '../components/Icon';
-import { LangSwitch, SoundToggle } from '../components/TopControls';
+import { LangSwitch, MotionToggle, SoundToggle } from '../components/TopControls';
 import { useMapNodes } from './WorldMap';
 import { WORLDS } from '../levels';
 import type { StrKey } from '../i18n/strings';
@@ -91,6 +91,7 @@ export function Home() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <LangSwitch dark />
           <SoundToggle dark />
+          <MotionToggle dark />
         </div>
       </header>
 

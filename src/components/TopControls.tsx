@@ -31,6 +31,18 @@ export function SoundToggle({ dark = false }: { dark?: boolean }) {
   );
 }
 
+/** Motion on/off. Defaults to the device's reduce-motion preference on the first visit. */
+export function MotionToggle({ dark = false }: { dark?: boolean }) {
+  const { t } = useT();
+  const still = useProgress((s) => s.settings.reducedMotion);
+  const setSetting = useProgress((s) => s.setSetting);
+  return (
+    <button type="button" className={`btn btn-icon ${dark ? 'btn-dark' : 'btn-secondary'}`} aria-label={t('motion')} aria-pressed={!still} title={t('motion')} onClick={() => setSetting('reducedMotion', !still)} style={{ borderRadius: 999 }} data-testid="motion-toggle">
+      <Icon name={still ? 'still' : 'sparkle'} size={22} />
+    </button>
+  );
+}
+
 export function XpBar({ wide = false }: { wide?: boolean }) {
   const xp = useProgress((s) => s.xp);
   const lv = playerLevel(xp);
@@ -52,6 +64,7 @@ export function TopControls({ compact = false }: { compact?: boolean }) {
       {!compact && <XpBar wide />}
       <LangSwitch />
       {!compact && <SoundToggle />}
+      {!compact && <MotionToggle />}
     </div>
   );
 }

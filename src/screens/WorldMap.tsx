@@ -9,7 +9,7 @@ import { go, href } from '../state/nav';
 import { useT } from '../i18n';
 import { Icon, Star } from '../components/Icon';
 import { Bit } from '../components/Bit';
-import { LangSwitch, SoundToggle } from '../components/TopControls';
+import { LangSwitch, MotionToggle, SoundToggle } from '../components/TopControls';
 import { useIsMobile } from '../ui/useMedia';
 import type { Block, Progress } from '../engine/types';
 
@@ -135,6 +135,7 @@ function Header({ nodes, light = false }: { nodes: MapNode[]; light?: boolean })
         </span>
         <LangSwitch />
         <SoundToggle />
+        <MotionToggle />
       </div>
     </header>
   );

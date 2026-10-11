@@ -314,7 +314,4 @@
 /* ---------- reduced motion ---------- */
 .rm *,.rm *::before,.rm *::after{animation:none!important;transition-duration:.15s!important}
 .rm .confetti,.rm .sparks,.rm .amb{display:none!important}
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation:none!important;transition-duration:.15s!important}
-  .confetti,.sparks,.amb{display:none!important}
-}
+/* prefers-reduced-motion sets the default of the in-game Motion switch (see state/progress.ts); the .rm class applies it */

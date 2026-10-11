@@ -192,7 +192,7 @@ export const LevelProgress = z.object({
 });
 
 export const ProgressSchema = z.object({
-  version: z.literal(1),
+  version: z.literal(2),
   xp: z.number().int().min(0),
   levels: z.record(z.string(), LevelProgress),
   badges: z.array(z.string().max(40)).max(50),

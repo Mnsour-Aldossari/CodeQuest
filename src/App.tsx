@@ -4,7 +4,6 @@ import { useRoute } from './state/nav';
 import { useProgress } from './state/progress';
 import { Home } from './screens/Home';
 import { WorldMap } from './screens/WorldMap';
-import { usePrefersReducedMotion } from './ui/useMedia';
 import { Bit } from './components/Bit';
 
 const LevelScreen = lazy(() => import('./level/LevelScreen').then((m) => ({ default: m.LevelScreen })));
@@ -20,9 +19,7 @@ function Loading() {
 export function App() {
   const route = useRoute();
   const lang = useProgress((s) => s.settings.lang);
-  const reduceSetting = useProgress((s) => s.settings.reducedMotion);
-  const prefersReduce = usePrefersReducedMotion();
-  const reduce = reduceSetting || prefersReduce;
+  const reduce = useProgress((s) => s.settings.reducedMotion);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -30,9 +27,6 @@ export function App() {
     document.title = lang === 'ar' ? 'مغامرة الكود · Code Quest' : 'Code Quest · مغامرة الكود';
   }, [lang]);
 
-  useEffect(() => {
-    if (prefersReduce && !reduceSetting) useProgress.getState().setSetting('reducedMotion', true);
-  }, [prefersReduce, reduceSetting]);
 
   let screen;
   switch (route.name) {
